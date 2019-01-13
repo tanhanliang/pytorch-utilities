@@ -20,10 +20,8 @@ class Net(BaseNetwork):
         E.g
         super(Net, self).__init__()
         self.metric_to_fn = {
-            # weighted by number of samples in each batch. E.g accuracy weighted by
-            # number of samples is number of correct predictions.
-            'Accuracy': metrics.correct_predictions_two_class,
-            'MSE Loss': nn.MSELoss(reduction='sum')
+            'Accuracy': metrics.accuracy,
+            'MSE Loss': nn.MSELoss()
         }
         self.metric_to_value_sums = {}
         self.criterion = criterion
