@@ -1,5 +1,5 @@
 import torch
-import torch.nn
+import torch.nn as nn
 import warnings
 
 
@@ -104,3 +104,15 @@ class BaseNetwork(nn.Module):
 
     def set_optimizer(self, optimizer):
         self.optimizer = optimizer
+
+
+    def reset_all_weights(self):
+        def reset_layer_weights(layer):
+            """
+            Initialise weights in a layer to a random value sampled from a uniform distribution.
+            @param layer: A torch.nn layer in the network.
+            """
+            if hasattr(layer, "reset_parameters"):
+                layer.reset_parameters()
+
+        self.apply(reset_layer_weights)
