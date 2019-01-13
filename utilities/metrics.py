@@ -28,7 +28,10 @@ def precision(outputs, targets):
     @return: the precision, a single number
     """
 
-    true_positives = (outputs > 0.5)*(targets == 1).sum().item()
-    false_positives = (outputs > 0.5)*(targets == 0).sum().item()
+    true_positives = ((outputs > 0.5)*(targets == 1)).sum().item()
+    false_positives = ((outputs > 0.5)*(targets == 0)).sum().item()
+
+    if true_positives + false_positives == 0:
+        return 0
 
     return true_positives/(true_positives + false_positives)
