@@ -41,7 +41,8 @@ class BaseNetwork(nn.Module):
     def compute_metrics(self, outputs, targets):
         """
         Compute metrics that are defined in the child class. 
-        Weights the value of each metric by the number of outputs.
+        Note that the metric_fn should sum the value for each training example, and
+        not average it. 
 
         @param outputs: the outputs of the network as a torch.Tensor
         @param targets: what you want the network to output, as a torch.Tensor
@@ -74,7 +75,7 @@ class BaseNetwork(nn.Module):
 
         for metric, value_sum in self.metric_to_value_sums.items():
             avg_value = value_sum/train_examples
-            metric_string += '[{0}: {1:10.4f}]'.format(metric, avg_value) 
+            metric_string += '[{0}:{1:8.4f}]'.format(metric, avg_value) 
 
         print(metric_string)
 
@@ -94,9 +95,9 @@ class BaseNetwork(nn.Module):
         metric_to_values = {}
 
         for metric, metric_fn in self.metric_to_fn.items():
-            avg_value = metric_fn(outputs, targets)/dataset_size
-            metric_string += '[{0}: {1:10.4f}]'.format(metric, avg_value)
-            metric_to_values[metric] = avg_value
+            value = metric_fn(outputs, targets)
+            metric_string += '[{0}:{1:8.4f}]'.format(metric, value)
+            metric_to_values[metric] = value
 
         print(metric_string)
         return metric_to_values
