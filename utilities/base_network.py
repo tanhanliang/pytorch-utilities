@@ -41,8 +41,6 @@ class BaseNetwork(nn.Module):
     def compute_metrics(self, outputs, targets):
         """
         Compute metrics that are defined in the child class. 
-        Note that the metric_fn should sum the value for each training example, and
-        not average it. 
 
         @param outputs: the outputs of the network as a torch.Tensor
         @param targets: what you want the network to output, as a torch.Tensor
