@@ -30,7 +30,7 @@ def cross_validate(model, dataset, splits, epochs, dataloader_params):
     for train_idx, test_idx in skf.split(dataset.targets, dataset.targets):
         print("\nCross validation fold %d" %fold)
 
-        model.apply(weights_init)
+        model.reset_all_weights()
         dataset.set_active_data(train_idx)
         train_generator = data.DataLoader(dataset, **dataloader_params)
 
